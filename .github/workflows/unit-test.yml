@@ -1,18 +1,33 @@
-name: Databricks CI (unit test)
+name: CI - Run Tests
 
 on:
-    push:
-        branches:
-            - main
-jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2
-            
-            - name: Install dependency
-              run: pip install pyspark pytest
+  push:
+    branches:
+      - main
+  pull_request:
 
-            - name: Run Unit Tests
-              run: pytest tests/
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Create Virtual Environment
+        run: python -m venv venv
+
+      - name: Activate Virtual Environment & Install Dependencies
+        run: |
+          source venv/bin/activate  # Activate venv
+          pip install -r requirements.txt
+
+      - name: Run Unit Tests
+        run: |
+          source venv/bin/activate  # Activate again before running tests
+          pytest tests/

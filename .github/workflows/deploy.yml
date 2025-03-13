@@ -1,0 +1,38 @@
+name: Deploy to Databricks
+
+on:
+  workflow_run:
+    workflows: ["CI - Run Tests"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Install Databricks CLI
+        run: |
+          pip install databricks-cli
+
+      - name: Configure Databricks CLI
+        env:
+          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+          DATABRICKS_ACCESS_TOKEN: ${{ secrets.DATABRICKS_ACCESS_TOKEN }}
+        run: |
+          databricks configure --host $DATABRICKS_HOST --token $DATABRICKS_ACCESS_TOKEN
+
+      - name: Auto-Pull Latest Git Changes in Databricks Repo
+        env:
+          DATABRICKS_REPO_PATH: ${{ vars.DATABRICKS_REPO_PATH }}
+        run: |
+          databricks repos update --path "$DATABRICKS_REPO_PATH" --branch main
