@@ -1,4 +1,4 @@
-name: Databricks Deployment
+name: Databricks CI (unit test)
 
 on:
     push:
