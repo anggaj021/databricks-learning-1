@@ -15,4 +15,4 @@ jobs:
               run: pip install pyspark pytest
 
             - name: Run Unit Tests
-              run: pytest test/
+              run: pytest tests/
