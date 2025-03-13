@@ -24,15 +24,10 @@ jobs:
         run: |
           pip install databricks-cli
 
-      - name: Configure Databricks CLI
-        env:
-          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
-          DATABRICKS_ACCESS_TOKEN: ${{ secrets.DATABRICKS_ACCESS_TOKEN }}
-        run: |
-          databricks configure --host $DATABRICKS_HOST --token $DATABRICKS_ACCESS_TOKEN
-
       - name: Auto-Pull Latest Git Changes in Databricks Repo
         env:
+          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_ACCESS_TOKEN }}
           DATABRICKS_REPO_PATH: ${{ vars.DATABRICKS_REPO_PATH }}
         run: |
           databricks repos update --path "$DATABRICKS_REPO_PATH" --branch main
