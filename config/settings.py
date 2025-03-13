@@ -1,3 +1,6 @@
+CATALOG_NAME = "mitrais_databricks"
+SCHEMA_NAME = "angga_test"
+
 BRONZE_TABLE = "bronze_sales"
 SILVER_TABLE = "silver_sales"
 GOLD_TABLE = "gold_sales"

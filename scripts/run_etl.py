@@ -1,4 +1,4 @@
-import etl.ingestion.bronze_ingestion as bronze_ingestion
+from etl.ingestion.bronze_ingestion import ingest_data
 from etl.transformation.silver_transformation import clean_data
 from etl.aggregation.gold_aggregation import aggregate_data
 from pyspark.sql import SparkSession
@@ -11,7 +11,7 @@ def main():
 
     # Bronze Layer - Raw Data Ingestion
     print("Ingesting raw data (Bronze)...")
-    bronze_df = bronze_ingestion(spark)
+    bronze_df = ingest_data(spark)
     bronze_df.show()
 
     # Silver Layer - Data Cleaning & Transformation
