@@ -1,4 +1,4 @@
-from pyspark.sql.dunctions import to_date, col
+from pyspark.sql.functions import to_date, col
 from pyspark.sql import SparkSession
 from config.settings import BRONZE_TABLE, SILVER_TABLE
 
