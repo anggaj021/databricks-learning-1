@@ -13,6 +13,9 @@ def save_to_bronze(df):
     """Save raw data as Bronze Delta Table"""
     df.write.format("delta").mode("overwrite").saveAsTable(BRONZE_TABLE)
 
-if __name__ == "__main__":
+def ingest_data():
     df_bronze = load_raw_data()
     save_to_bronze(df_bronze)
+
+if __name__ == "__main__":
+    ingest_data()

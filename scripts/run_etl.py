@@ -1,6 +1,6 @@
 from etl.ingestion.bronze_ingestion import ingest_data
-from etl.transformation.silver_transformation import clean_data
-from etl.aggregation.gold_aggregation import aggregate_data
+from etl.transformation.silver_transformation import transform_data
+from etl.aggregation.gold_aggregation import agg_data
 from pyspark.sql import SparkSession
 
 # Initialize Spark session
@@ -11,18 +11,15 @@ def main():
 
     # Bronze Layer - Raw Data Ingestion
     print("Ingesting raw data (Bronze)...")
-    bronze_df = ingest_data(spark)
-    bronze_df.show()
+    bronze_df = ingest_data()
 
     # Silver Layer - Data Cleaning & Transformation
     print("Transforming data (Silver)...")
-    silver_df = clean_data(bronze_df)
-    silver_df.show()
+    silver_df = transform_data()
 
     # Gold Layer - Aggregation
     print("Aggregating data (Gold)...")
-    gold_df = aggregate_data(silver_df)
-    gold_df.show()
+    gold_df = agg_data()
 
     print("ETL process completed successfully!")
 

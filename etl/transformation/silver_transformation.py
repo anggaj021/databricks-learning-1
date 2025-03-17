@@ -13,7 +13,10 @@ def save_to_silver(df):
     """Save cleaned data as Silver Delta Table"""
     df.write.format("delta").mode("overwrite").saveAsTable(SILVER_TABLE)
 
-if __name__ == "__main__":
+def transform_data():
     df_silver = spark.read.table(BRONZE_TABLE)
     df_silver = clean_data(df_silver)
     save_to_silver(df_silver)
+
+if __name__ == "__main__":
+    transform_data()
